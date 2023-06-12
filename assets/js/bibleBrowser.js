@@ -1,6 +1,7 @@
 import { bibleQuery } from "./apiWrapper.js";
 
 async function getBibleList(options = {}) {
+    options.includeFullDetails = true;
     var rawJson = await bibleQuery(options);
     
     var rawData = rawJson.data;
