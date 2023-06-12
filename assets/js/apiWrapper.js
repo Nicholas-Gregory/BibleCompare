@@ -12,11 +12,13 @@ function commaSeparatedList(arr) {
     return str;
 }
 
-function makeRequest(endpoint) {
-    return fetch(`https://api.scripture.api.bible/v1/${endpoint}`, { headers: { 'accept': 'application/json', 'api-key': apiKey }});
+async function makeRequest(endpoint) {
+    var response = await fetch(`https://api.scripture.api.bible/v1/${endpoint}`, { headers: { 'accept': 'application/json', 'api-key': apiKey }});
+    var data = await response.json();
+    return data;
 }
 
-function bibleQuery(options) {
+export function bibleQuery(options = {}) {
     var endpoint = "bibles?";
     if (options.language) {
         endpoint += `language=${options.language}&`;
@@ -37,11 +39,11 @@ function bibleQuery(options) {
     return makeRequest(endpoint);
 }
 
-function getBibleById(id) {
+export function getBibleById(id) {
     return makeRequest(`bibles/${id}`);
 }
 
-function queryBooks(id, options = {}) {
+export function queryBooks(id, options = {}) {
     var endpoint = `bibles/${id}/books?`
     if (options.includeChapters) {
         endpoint += "include-chapters=true&";
@@ -53,7 +55,7 @@ function queryBooks(id, options = {}) {
     return makeRequest(endpoint);
 }
 
-function getBookById(bibleId, bookId, includeChapters = false) {
+export function getBookById(bibleId, bookId, includeChapters = false) {
     var endpoint = `bibles/${bibleId}/books/${bookId}?`;
     if (includeChapters) {
         endpoint += "include-chapters=true";
@@ -62,11 +64,11 @@ function getBookById(bibleId, bookId, includeChapters = false) {
     return makeRequest(endpoint);
 }
 
-function queryChapters(bibleId, bookId) {
+export function queryChapters(bibleId, bookId) {
     return makeRequest(`bibles/${bibleId}/books/${bookId}/chapters`);
 }
 
-function getChapterById(bibleId, chapterId, options = {}) {
+export function getChapterById(bibleId, chapterId, options = {}) {
     var endpoint = `bibles/${bibleId}/chapters/${chapterId}?`;
 
     if (options.contentType) {
@@ -94,15 +96,15 @@ function getChapterById(bibleId, chapterId, options = {}) {
     return makeRequest(endpoint);
 }
 
-function querySectionsByBook(bibleId, bookId) {
+export function querySectionsByBook(bibleId, bookId) {
     return makeRequest(`bibles/${bibleId}/books/${bookId}/sections`);
 }
 
-function querySectionsByChapter(bibleId, chapterId) {
+export function querySectionsByChapter(bibleId, chapterId) {
     return makeRequest(`bibles/${bibleId}/chapters/${chapterId}/sections`)
 }
 
-function getSectionById(bibleId, sectoinId, options = {}) {
+export function getSectionById(bibleId, sectoinId, options = {}) {
     var endpoint = `bibles/${bibleId}/sections/${sectoinId}?`;
     
     if (options.contentType) {
@@ -130,11 +132,11 @@ function getSectionById(bibleId, sectoinId, options = {}) {
     return makeRequest(endpoint);
 }
 
-function queryVerses(bibleId, chapterId) {
+export function queryVerses(bibleId, chapterId) {
     return makeRequest(`bibles/${bibleId}/chapters/${chapterId}/verses`);
 }
 
-function getVerseById(bibleId, verseId, options = {}) {
+export function getVerseById(bibleId, verseId, options = {}) {
     var endpoint = `bibles/${bibleId}/verses/${verseId}?`;
 
     if (options.contentType) {
@@ -165,7 +167,7 @@ function getVerseById(bibleId, verseId, options = {}) {
     return makeRequest(endpoint);
 }
 
-function search(bibleId, options = {}) {
+export function search(bibleId, options = {}) {
     var endpoint = `bibles/${bibleId}/search?`;
 
     if (options.query) {
