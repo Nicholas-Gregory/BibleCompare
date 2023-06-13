@@ -1,5 +1,3 @@
-var apiKey = "0553ce826b28ef47c4be59023c6dd072";
-
 function commaSeparatedList(arr) {
     var str = "";
     for (var i = 0; i < arr.length; i++) {
