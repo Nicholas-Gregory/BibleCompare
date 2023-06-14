@@ -1,3 +1,5 @@
+import { API_KEY } from '$env/static/private';
+
 function commaSeparatedList(arr) {
     var str = "";
     for (var i = 0; i < arr.length; i++) {
@@ -11,7 +13,7 @@ function commaSeparatedList(arr) {
 }
 
 async function makeRequest(endpoint) {
-    var response = await fetch(`https://api.scripture.api.bible/v1/${endpoint}`, { headers: { 'accept': 'application/json', 'api-key': apiKey }});
+    var response = await fetch(`https://api.scripture.api.bible/v1/${endpoint}`, { headers: { 'accept': 'application/json', 'api-key': API_KEY }});
     var data = await response.json();
     return data;
 }
