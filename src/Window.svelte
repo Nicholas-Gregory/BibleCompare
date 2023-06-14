@@ -6,6 +6,10 @@
 
     let current = "none";
 
+    let components = {
+        "BibleBrowser": BibleBrowser
+    }
+
     function onMouseDown() {
         
     }
@@ -24,10 +28,8 @@
         <p>
             Select a function for this window.
         </p>
-    {/if}
-
-    {#if current === "BibleBrowser"}
-        <BibleBrowser width={width} height={height}/>
+    {:else}
+        <svelte:component this={components[current]} width={width} height={height}/>
     {/if}
 </div>
 
