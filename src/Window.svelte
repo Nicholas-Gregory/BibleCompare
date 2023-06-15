@@ -1,10 +1,10 @@
 <script>
     import BibleBrowser from "./BibleBrowser.svelte";
+    import { fade } from "svelte/transition";
 
     export let width;
     export let height;
-
-    let current = "none";
+    export let current = "none";
 
     let components = {
         "BibleBrowser": BibleBrowser
@@ -15,9 +15,16 @@
     }
 </script>
 
-<div id="window" style:width style:height bind:clientWidth={width} bind:clientHeight={height}>
-    <div id="topbar" on:mousedown={onMouseDown}>
-        <span>X</span>
+<div 
+    id="window" 
+    style:width 
+    style:height 
+    bind:clientWidth={width} 
+    bind:clientHeight={height}
+    in:fade="{{duration: 200}}" 
+    out:fade="{{duration: 200}}" 
+>
+    <div class="topbar" on:mousedown={onMouseDown}>        
         <select bind:value={current}>
             <option value="none">None</option>
             <option value="BibleBrowser">Bible Browser</option>
@@ -34,14 +41,9 @@
 </div>
 
 <style>
-    #topbar {
+    .topbar {
         height: 20px;        
-        position: fixed;
-    }
-    #topbar span {
-        background-color: red;
         position: relative;
-        cursor: pointer;
     }
     #window {
         border: solid black;
